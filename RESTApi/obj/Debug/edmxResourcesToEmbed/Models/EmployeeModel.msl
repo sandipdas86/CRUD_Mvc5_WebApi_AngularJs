@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="DBEntities_">
+    <EntitySetMapping Name="TblCities">
+      <EntityTypeMapping TypeName="Models.TblCity">
+        <MappingFragment StoreEntitySet="TblCity">
+          <ScalarProperty Name="City_Id" ColumnName="City_Id" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Fk_StateId" ColumnName="Fk_StateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TblCountries">
+      <EntityTypeMapping TypeName="Models.TblCountry">
+        <MappingFragment StoreEntitySet="TblCountry">
+          <ScalarProperty Name="Country_Id" ColumnName="Country_Id" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TblEmployees">
+      <EntityTypeMapping TypeName="Models.TblEmployee">
+        <MappingFragment StoreEntitySet="TblEmployee">
+          <ScalarProperty Name="Emp_Id" ColumnName="Emp_Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TblStates">
+      <EntityTypeMapping TypeName="Models.TblState">
+        <MappingFragment StoreEntitySet="TblState">
+          <ScalarProperty Name="State_Id" ColumnName="State_Id" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Fk_CountryId" ColumnName="Fk_CountryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="AddNewEmpDetails_SP" FunctionName="Models.Store.AddNewEmpDetails_SP" />
+    <FunctionImportMapping FunctionImportName="DeleteEmpById_SP" FunctionName="Models.Store.DeleteEmpById_SP" />
+    <FunctionImportMapping FunctionImportName="FetchCity_SP" FunctionName="Models.Store.FetchCity_SP" />
+    <FunctionImportMapping FunctionImportName="FetchState_SP" FunctionName="Models.Store.FetchState_SP" />
+    <FunctionImportMapping FunctionImportName="GetEmployees_SP" FunctionName="Models.Store.GetEmployees_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Models.GetEmployees_SP_Result">
+          <ScalarProperty Name="Emp_Id" ColumnName="Emp_Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UpdateEmpDetails_SP" FunctionName="Models.Store.UpdateEmpDetails_SP" />
+  </EntityContainerMapping>
+</Mapping>

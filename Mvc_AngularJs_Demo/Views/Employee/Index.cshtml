@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Employee Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" ng-controller="DetailsController" ng-init="init()">
+    <div class="col-md-6">
+        <fieldset>
+            <legend>Employee Details</legend>
+            <table border="1">
+                <thead>
+                    <tr></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>EmpID</th>
+                        <th>Name</th>
+                        <th>Sex</th>
+                        <th>Date Of Birth</th>
+                        <th>City</th>
+                        <th>Address</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr ng-repeat="emp in employees">
+                        <td>{{emp.Emp_Id}}</td>
+                        <td>{{emp.Name}}</td>
+                        <td>{{emp.Sex}}</td>
+                        <td>{{emp.DOB.replace('/Date(','').replace(')/','') | date:'dd/MM/yyyy'}}</td>
+                        <td>{{emp.City}}</td>
+                        <td>{{emp.Address}}</td>
+                        <td>
+                            <input type="button" class="btn btn-success" ng-click="edit(emp)" value="Edit" />&nbsp;
+                            <input type="button" class="btn btn-danger" ng-click="delete(emp.Emp_Id)" value="Delete" />
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr></tr>
+                </tfoot>
+            </table>
+        </fieldset>
+    </div>
+
+    <div class="col-md-6">
+        <fieldset>
+            <legend><span id="spn">Add Employee</span></legend>
+            <form name="myForm" novalidate>
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" class="form-control" ng-model="name" name="name" required />
+                    <span style="color:red" ng-show="!myForm.name.$pristine && myForm.name.$invalid">
+                        <span ng-show="myForm.name.$error.required">Name is required</span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label>Sex:</label>
+                    <input type="text" class="form-control" ng-model="sex" name="sex" required />
+                    <span style="color:red" ng-show="myForm.sex.$dirty && myForm.sex.$invalid">
+                        <span ng-show="myForm.sex.$error.required">Sex is required</span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label>DOB:</label>
+                    <input type="datetime" class="form-control" ng-model="dob" format="DD-MM-YYYY" format="short"  name="dob" required />
+                    <span style="color:red" ng-show="myForm.dob.$dirty && myForm.dob.$invalid">
+                        <span ng-show="myForm.dob.$error.required">DOB is required</span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label>City:</label>
+                    <input type="number" class="form-control" ng-model="city" name="city" required />
+                    <span style="color:red" ng-show="myForm.city.$dirty && myForm.city.$invalid">
+                        <span ng-show="myForm.city.$error.required">City is required</span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label>Address:</label>
+                    <input type="text" class="form-control" ng-model="address" name="address" required />
+                    <span style="color:red" ng-show="myForm.address.$dirty && myForm.address.$invalid">
+                        <span ng-show="myForm.address.$error.required">Address is required</span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <input type="button" id="btnSave" class="btn btn-primary" ng-click="save(name,sex,dob,city,address)" 
+                           ng-disabled="myForm.$invalid" value="Save" />
+                </div>
+            </form>
+        </fieldset>
+        @Html.Hidden("EmpID_")
+    </div>
+</div>
+

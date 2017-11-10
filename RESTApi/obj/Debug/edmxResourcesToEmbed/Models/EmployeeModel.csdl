@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TblCity">
+    <Key>
+      <PropertyRef Name="City_Id" />
+    </Key>
+    <Property Name="City_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fk_StateId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TblState" Relationship="Self.FK__TblCity__Fk_Stat__1367E606" FromRole="TblCity" ToRole="TblState" />
+  </EntityType>
+  <EntityType Name="TblCountry">
+    <Key>
+      <PropertyRef Name="Country_Id" />
+    </Key>
+    <Property Name="Country_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TblStates" Relationship="Self.FK__TblState__Fk_Cou__0EA330E9" FromRole="TblCountry" ToRole="TblState" />
+  </EntityType>
+  <EntityType Name="TblEmployee">
+    <Key>
+      <PropertyRef Name="Emp_Id" />
+    </Key>
+    <Property Name="Emp_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Sex" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="City" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TblState">
+    <Key>
+      <PropertyRef Name="State_Id" />
+    </Key>
+    <Property Name="State_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fk_CountryId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TblCities" Relationship="Self.FK__TblCity__Fk_Stat__1367E606" FromRole="TblState" ToRole="TblCity" />
+    <NavigationProperty Name="TblCountry" Relationship="Self.FK__TblState__Fk_Cou__0EA330E9" FromRole="TblState" ToRole="TblCountry" />
+  </EntityType>
+  <Association Name="FK__TblCity__Fk_Stat__1367E606">
+    <End Role="TblState" Type="Self.TblState" Multiplicity="1" />
+    <End Role="TblCity" Type="Self.TblCity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblState">
+        <PropertyRef Name="State_Id" />
+      </Principal>
+      <Dependent Role="TblCity">
+        <PropertyRef Name="Fk_StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TblState__Fk_Cou__0EA330E9">
+    <End Role="TblCountry" Type="Self.TblCountry" Multiplicity="1" />
+    <End Role="TblState" Type="Self.TblState" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblCountry">
+        <PropertyRef Name="Country_Id" />
+      </Principal>
+      <Dependent Role="TblState">
+        <PropertyRef Name="Fk_CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBEntities_" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TblCities" EntityType="Self.TblCity" />
+    <EntitySet Name="TblCountries" EntityType="Self.TblCountry" />
+    <EntitySet Name="TblEmployees" EntityType="Self.TblEmployee" />
+    <EntitySet Name="TblStates" EntityType="Self.TblState" />
+    <AssociationSet Name="FK__TblCity__Fk_Stat__1367E606" Association="Self.FK__TblCity__Fk_Stat__1367E606">
+      <End Role="TblState" EntitySet="TblStates" />
+      <End Role="TblCity" EntitySet="TblCities" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TblState__Fk_Cou__0EA330E9" Association="Self.FK__TblState__Fk_Cou__0EA330E9">
+      <End Role="TblCountry" EntitySet="TblCountries" />
+      <End Role="TblState" EntitySet="TblStates" />
+    </AssociationSet>
+    <FunctionImport Name="AddNewEmpDetails_SP">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Sex" Mode="In" Type="String" />
+      <Parameter Name="DOB" Mode="In" Type="DateTime" />
+      <Parameter Name="City" Mode="In" Type="Int32" />
+      <Parameter Name="Address" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteEmpById_SP">
+      <Parameter Name="EmpId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="FetchCity_SP" ReturnType="Collection(String)">
+      <Parameter Name="StateId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="FetchState_SP" ReturnType="Collection(String)">
+      <Parameter Name="CountryId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetEmployees_SP" ReturnType="Collection(Models.GetEmployees_SP_Result)" />
+    <FunctionImport Name="UpdateEmpDetails_SP">
+      <Parameter Name="EmpId" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Sex" Mode="In" Type="String" />
+      <Parameter Name="DOB" Mode="In" Type="DateTime" />
+      <Parameter Name="City" Mode="In" Type="Int32" />
+      <Parameter Name="Address" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="GetEmployees_SP_Result">
+    <Property Type="Int32" Name="Emp_Id" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Sex" Nullable="false" MaxLength="10" />
+    <Property Type="DateTime" Name="DOB" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="City" Nullable="false" />
+    <Property Type="String" Name="Address" Nullable="false" />
+  </ComplexType>
+</Schema>
